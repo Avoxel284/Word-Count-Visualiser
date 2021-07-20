@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>word count visualiser</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="controlPanel">
+    <!-- <div id="controlPanelDocuments">
+      <div id="controlPanelDocumentsContainer">
+        <div class="controlPanelDocument">
+          
+        </div>
+      </div>
+    </div> was gonna add this but it might be too hard -->
+
+    <div id="controlPanelWordCount">
+      <div class="controlPanelStat" id="cpStat-percentage">50%</div>
+      <div class="controlPanelStat" id="cpStat-words">50 words</div>
+    </div>
+
+    <div id="controlPanelButtons">
+      <div class="GoButton">
+        <button id="go" onclick="visualiseWords()">Visualise</button>
+      </div>
+
+      <div class="ShowVisualiser">
+        <button id="showVisualiser" onclick="showVisualiserUpdated()" class="icon-button" type="button"
+          onchange="update()" title="show visual highlighting">
+          <img style="width: 80%; background: none;" src="showvis.svg">
+        </button>
+      </div>
+
+      <div class="DarkModeButton">
+        <button id="darkModeButton" onclick="darkModeUpdated()" class="icon-button" type="button" onchange="update()"
+          title="toggle dark mode">
+          <img style="width: 100%; background: none; margin: auto;" src="darkmode.svg">
+        </button>
+      </div>
+
+      <div class="HelpButton">
+        <button class="icon-button" type="button" onclick="displayHelpMessage()" title="show words"
+          style="font-size: 15px; font-family: 'Barlow'; line-height: 0;">?</button>
+      </div>
+
+      <!-- <div class="BoldButton">
+        <button class="icon-button ql-bold" type="button" onchange="update()" title="show words"
+          style="font-family: serif !important; font-weight: bold;">B</button>
+      </div>
+
+      <div class="ItalicsButton">
+        <button class="icon-button ql-italic" type="button" onchange="update()" title="show words"
+          style="font-family: serif !important; font-style: italic;">I</button>
+      </div> -->
+      <!-- No need as we can just use keybinds (also quill.js for some reason wouldn't work with the buttons) -->
+
+      <div class="Goal">
+        <input id="goalInput" type="number" placeholder="goal" onchange="visualiseWords()" oninput="update()"></input>
+      </div>
+
+      <div class="ColourPicker">
+        <input id="colourInput" type="color" title="background colour" oninput="update()"></input>
+      </div>
+    </div>
+  </div>
+
+  <dialog>Hello</dialog>
+
+  <input type=text id="titleInput" class="heading-input" placeholder="Set a title" oninput="update()">
+  <div id="editorContainer">
+    <span id="visualLayer" class="highlight-words"></span>
+    <span id="textLayer" contenteditable="true" oninput="textContainerUpdated()"></span>
+  </div>
+
+  <span id="noJs">Your browser does not support JavaScript :(</span>
+
+  <div class="alert">
+    <span></span>
+  </div>
+
+
+  <div class="dialog">
+    <u>Keybinds:</u><br>
+     - Command + B = Bold <br>
+     - Command + I = Italics <br>
+     - Command + U = Underline <br><br>
+    <u>What does this tool do?</u><br>
+    Enter in your word count goal in the bottom right corner and click visualise to generate random lorem ipsum in the
+    background to help visualise how much more writing is needed. Otherwise, this is a very simple editor.
+    <br><br>
+    <u>Customising</u><br>
+    You can change the visual highlight colour in the control panel, as well as toggle it on and off. <br><br>
+    <u>Browser support</u><br>
+    This webapp works best on Chrome.
+
+    <span class="closebtn" onclick="this.parentElement.style.display = 'none'">&times;</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

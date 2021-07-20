@@ -1,0 +1,502 @@
+:root {
+  --dark-mode-text: rgb(230, 230, 230);
+  --dark-mode-bg: rgb(31, 31, 30);
+  --light-mode-text: rgb(10, 10, 10);
+  --light-mode-bg: rgb(255, 255, 255);
+}
+
+body {
+  height: 100%;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin: 0;
+  background-color: var(--dark-mode-bg);
+  color: white !important;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(168, 168, 168);
+  border-radius: 5px;
+}
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.flex {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+*:focus {
+  outline: none;
+}
+
+label > input {
+  width: 100px;
+  height: 60px;
+}
+
+label {
+  position: relative;
+  width: 100px;
+  height: 60px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+label > div,
+label > input {
+  position: absolute;
+}
+
+label > div {
+  color: white;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  font-family: sans-serif;
+}
+
+#controlPanel {
+  font-family: Roboto;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  margin: 0;
+  z-index: 1000;
+  width: 80px;
+}
+
+#controlPanelButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr ;
+  gap: 5px 5px;
+  grid-template-areas:
+    "HelpButton DarkModeButton"
+    "ColourPicker ShowVisualiser"
+    "Goal Goal"
+    "GoButton GoButton";
+
+  background-color: rgb(240, 240, 240);
+  border-radius: 5px;
+  padding: 5px;
+  transition: all 0.1s;
+  margin: 0;
+  width: 100%;
+  height: fit-content;
+}
+
+#controlPanelButtons * {
+  background-color: var(--light-mode-bg);
+  font-family: "Open Sans", sans-serif !important;
+  border-radius: 5px !important;
+}
+
+#controlPanelButtons * * {
+  width: 100%;
+  height: 100%;
+}
+
+/* ControlPanelDocuments - Possible later function */
+
+#controlPanelDocuments {
+  width: 100%;
+  padding: 5px;
+  background-color: rgb(240, 240, 240);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  height: 20px;
+  transition: height 0.2s;
+  color: black;
+  text-align: center;
+}
+
+#controlPanelDocuments:hover {
+  height: 400px;
+}
+
+#controlPanelDocumentsContainer {
+  height: 100%;
+  width: 100%;
+  /* overflow-y: scroll; */
+  overflow-x: hidden;
+}
+
+#controlPanelDocumentsContainer::-webkit-scrollbar {
+  width: 5px;
+}
+#controlPanelDocumentsContainer::-webkit-scrollbar-thumb {
+  background-color: rgb(168, 168, 168);
+  border-radius: 20px;
+}
+#controlPanelDocumentsContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.controlPanelDocument {
+  width: 100%;
+  height: 80px;
+  background-color: var(--light-mode-bg);
+  display: none;
+  border-radius: 5px;
+}
+
+#controlPanelDocuments:hover .controlPanelDocument {
+  display: block;
+}
+
+/* ControlPanelWordCount */
+
+#controlPanelWordCount {
+  width: 100%;
+  padding: 5px;
+  background-color: rgb(240, 240, 240);
+  margin-bottom: 10px;
+  height: fit-content;
+  transition: height 0.2s;
+  border-radius: 5px;
+  color: black;
+}
+
+.controlPanelStat{
+  width: 100%;
+  height: fit-content;
+  background-color: rgb(240, 240, 240);
+  text-align: left;
+}
+
+.icon-button {
+  margin: 0;
+  border: none !important;
+  appearance: none;
+  background-color: #cccccc;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.icon-button:hover {
+  background-color: #d3d3d3 !important;
+}
+
+.GoButton {
+  grid-area: GoButton;
+}
+
+.FontSize {
+  grid-area: FontSize;
+}
+
+.BoldButton {
+  grid-area: BoldButton;
+}
+
+.ItalicsButton {
+  grid-area: ItalicsButton;
+}
+
+.LineHeight {
+  grid-area: LineHeight;
+}
+
+.ShowVisualiser {
+  grid-area: ShowVisualiser;
+}
+
+.Goal {
+  grid-area: Goal;
+}
+
+.ColourPicker {
+  grid-area: ColourPicker;
+}
+
+.DarkModeButton {
+  grid-area: DarkModeButton;
+}
+
+.HelpButton{
+  grid-area: HelpButton;
+}
+
+/* Layers and containers */
+
+#editorContainer {
+  width: 65%;
+  margin-left: 20%;
+  margin-top: 150px;
+}
+
+#visualLayer {
+  color: transparent;
+  position: relative;
+  max-width: 80%;
+  word-wrap:break-word;
+
+  line-height: unset;
+  font-family: Roboto;
+  font-size: 18px;
+  /* color: rgb(53, 53, 53); */
+}
+
+#textLayer {
+  position: absolute;
+  width: inherit;
+  min-width: 5px;
+  line-height: unset;
+  font-family: Roboto;
+  font-size: 18px;
+  top: 150px;
+  display: block;
+}
+
+#titleInput {
+  color: white;
+  text-overflow: ellipsis;
+  width: 60%;
+  left: 20%;
+}
+
+.heading-input {
+  left: 20px;
+  top: 70px;
+  -webkit-appearance: none;
+  font-size: 40px;
+  padding: 0;
+  outline: none;
+  border: none;
+  background: none;
+  display: inline;
+  position: absolute;
+  font-weight: bold;
+  font-family: Roboto;
+}
+
+.highlight-words {
+  background-color: #6b6b6b;
+
+  -moz-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  -moz-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  -moz-border-top-left-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+
+  -moz-border-top-right-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
+
+  -webkit-box-decoration-break: clone;
+  -o-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.bottomOverlay {
+  position: fixed;
+  bottom: 5px;
+  font-family: Barlow;
+  margin-left: 5px;
+}
+
+#goalInput {
+  padding: 0;
+  border: 0;
+  font-size: 20px;
+  text-align: center;
+}
+
+#showVisualiser {
+  margin: 0;
+  border: none !important;
+  appearance: none;
+  background-color: rgb(177, 255, 177);
+  cursor: pointer;
+  transition: all 0.1s;
+  padding: 0;
+  word-wrap: break-word;
+}
+
+#showVisualiser:hover {
+  background-color: grey;
+}
+
+#go {
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  font-size: 16px;
+  text-align: center;
+  background: white;
+  transition: all 0.1s;
+}
+
+#go:hover {
+  background-color: grey;
+}
+
+#fontSize {
+  margin: 0;
+}
+
+#lineHeight {
+  margin: 0;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="button"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  padding: 0 !important;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 5px;
+  height: 15px;
+  border-radius: 2px;
+  background: #0073ff;
+  cursor: ew-resize;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 5px;
+  height: 15px;
+  border-radius: 2px;
+  background: #0073ff;
+  cursor: ew-resize;
+}
+
+#colourInput {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  border-color: transparent;
+  appearance: none;
+  background-color: #cccccc;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+#colourInput::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  border-radius: inherit !important;
+}
+
+#colourInput::-webkit-color-swatch {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  border-radius: inherit !important;
+}
+
+#tooltip {
+  position: relative;
+  left: 30px;
+  text-align: center;
+  font-family: Barlow;
+  font-weight: 700;
+  background-color: rgb(240, 240, 240);
+}
+
+.alert {
+  padding: 10px;
+  background-color: #f44336;
+  color: black;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  border-radius: 5px;
+  font-family: "Barlow";
+  opacity: 0;
+  transition: 0.3s;
+  font-size: 20px;
+}
+
+.dialog{
+  padding: 10px;
+  background-color: #c4c4c4;
+  color: black;
+  border-radius: 5px;
+  font-family: "Barlow";
+  transition: 0.3s;
+  font-size: 20px;
+  border:none;
+  width: 40%;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity .2s;
+  display: none;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: rgb(255, 49, 49);
+  font-weight: bold;
+  font-size: 29px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+  position: absolute;
+  top:8px;
+  right:10px;
+}
+
+.closebtn:hover {
+  color: rgb(151, 0, 0);
+}
+
+.lightmode {
+  background-color: var(--light-mode-bg);
+  color: var(--light-mode-text);
+}
+
+.lightmode #titleInput {
+  color: var(--light-mode-text);
+}
+
+.lightmode #textLayer {
+  color: var(--light-mode-text);
+}
+
+
+#noJs{
+  margin-left:20%;
+}
