@@ -1,3 +1,7 @@
+// Avoxel284
+// Word Count Visualiser main script
+
+// variables
 let words = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum".split(" ");
 let goal = document.getElementById("goalInput");
 let visualLayer = document.getElementById("visualLayer");
@@ -15,9 +19,8 @@ let randomWords = "";
 const MAX_GENERATED_WORDS = 5000;
 
 
-var quill = new Quill(textLayer, {
+var quill = new Quill(textLayer, { // glad this exists lol
   theme: 'snow',
-  placeholder: "Let's start a new story...",
 
   modules: {
     toolbar: {
@@ -46,7 +49,7 @@ function displayHelpMessage() {
   document.getElementsByClassName("dialog")[0].style.display = (document.getElementsByClassName("dialog")[0].style.display == "block" ? "none" : "block");
 }
 
-function getWordCount() {
+function getWordCount() { // function
   s = textLayer.textContent;
   s = s.replace(/(^\s*)|(\s*$)/gi, ""); // scary regex
   s = s.replace(/[ ]{2,}/gi, "");
@@ -58,7 +61,7 @@ function getWordCount() {
 
 function updateStats() {
   if (goal.value != 0 && ((getWordCount() / goal.value) == Infinity || (getWordCount() / goal.value) * 100 > 100 ) ) {
-    document.querySelector("#cpStat-percentage").innerHTML = "100%" + " <span style='font-size:10px; color: dark-grey;'>finished!!</span>";
+    document.querySelector("#cpStat-percentage").innerHTML = "100%" + " <span style='font-size:10px; color: dark-grey;'>finished!</span>";
   } else if (goal.value == 0){
     document.querySelector("#cpStat-percentage").innerHTML = " <span style='font-size:10px; color: dark-grey;'>Set a goal!</span>";
   } else {
@@ -74,7 +77,7 @@ function textContainerUpdated() {
 }
 
 function showVisualiserUpdated() {
-  if (!showVisualiser) {
+  if (!showVisualiser) {  // if
     visualLayer.style.opacity = "1";
     showVisualiserInput.style.backgroundColor = "rgb(177, 255, 177)";
   } else {
@@ -90,7 +93,7 @@ function darkModeUpdated(c) {
   update()
 }
 
-function update() { // Visual update
+function update() { // Visual update --> also output! :)
   if (darkModeToggle === true) {
     document.body.classList.remove("lightmode");
     document.querySelector("#darkModeButton img").src = "darkmode.svg";
@@ -107,11 +110,11 @@ function update() { // Visual update
 }
 
 function visualiseWords() {
-  if (goal.value < MAX_GENERATED_WORDS) {
+  if (goal.value < MAX_GENERATED_WORDS) { // input
     visualLayer.innerHTML = "";
     randomWords = "";
 
-    for (i = 0; i < goal.value; i++) {
+    for (i = 0; i < goal.value; i++) { // for loop
       randomWords += words[Math.floor(Math.random() * words.length) + 1] + " ";
     }
 
@@ -128,6 +131,8 @@ function visualiseWords() {
 showVisualiser = "true";
 document.getElementById("colourInput").value = "#6b6b6b";
 document.getElementById("noJs").remove();
+
+// Local storage
 
 if (localStorage.getItem('highlightColour')) {
   document.getElementById("colourInput").value = localStorage.getItem('highlightColour');
@@ -146,7 +151,7 @@ if (localStorage.getItem('documentTitle')) {
 
 if (localStorage.getItem('darkModeToggle')) {
   darkModeToggle = localStorage.getItem('darkModeToggle');
-  if (typeof (darkModeToggle) == "string") {
+  if (typeof (darkModeToggle) == "string") { // parse string from localstorage to boolean
     switch (darkModeToggle) {
       case "true":
         darkModeToggle = true;
@@ -167,6 +172,7 @@ if (localStorage.getItem('documentGoal')) {
   goal.value = localStorage.getItem('documentGoal');
   visualiseWords();
 }
+
 
 update();
 
